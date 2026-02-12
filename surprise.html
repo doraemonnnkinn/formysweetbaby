@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For My Baby</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { 
+      font-family: 'Poppins', sans-serif; 
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4); 
+      min-height: 100vh; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      padding: 20px; 
+      color: #4a1c1c; 
+      overflow-x: hidden;
+    }
+
+    .card { 
+      background: rgba(255, 255, 255, 0.95); 
+      max-width: 800px; 
+      width: 100%; 
+      border-radius: 20px; 
+      padding: 30px 25px 40px; 
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15); 
+      position: relative; 
+      overflow: hidden; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      animation: fadeIn 1.5s ease; 
+    }
+
+    h1 { 
+      font-family: 'Great Vibes', cursive; 
+      font-size: 3rem; 
+      text-align: center; 
+      margin-bottom: 20px; 
+      color: #d6336c; 
+    }
+
+    /* FLOATING + SPINNING PHOTO */
+    .couple-pic {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 20px;
+      border: 4px solid #ff4d6d;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      display: none;
+      opacity: 0;
+      transition: opacity 2s;
+      animation: floatSpin 6s ease-in-out infinite;
+    }
+
+    @keyframes floatSpin {
+      0% { transform: translateY(0px) rotate(0deg) scale(1); }
+      25% { transform: translateY(-10px) rotate(15deg) scale(1.02); }
+      50% { transform: translateY(-20px) rotate(0deg) scale(1); }
+      75% { transform: translateY(-10px) rotate(-15deg) scale(1.02); }
+      100% { transform: translateY(0px) rotate(0deg) scale(1); }
+    }
+
+    .message { 
+      font-size: 0.95rem; 
+      line-height: 1.7; 
+      text-align: justify; 
+      margin-bottom: 30px; 
+      white-space: pre-line; 
+      display: none; 
+    }
+
+    .login, .question { 
+      text-align: center; 
+      margin-top: 20px; 
+    }
+    .login p, .question p { 
+      font-size: 1.2rem; 
+      font-weight: 600; 
+      margin-bottom: 20px; 
+    }
+
+    input[type='text'] { 
+      padding: 10px 15px; 
+      border-radius: 10px; 
+      border: 1px solid #ccc; 
+      font-size: 1rem; 
+      width: 250px;
+    }
+
+    button { 
+      padding: 12px 28px; 
+      border-radius: 30px; 
+      border: none; 
+      font-size: 1rem; 
+      cursor: pointer; 
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 1s ease; 
+      margin:5px; 
+    }
+
+    .yes { 
+      background: #ff4d6d; 
+      color: white; 
+      box-shadow: 0 10px 20px rgba(255,77,109,0.4); 
+    }
+    .yes:hover { transform: scale(1.08); }
+
+    .no { 
+      background: #f1f1f1; 
+      color: #555; 
+    }
+
+    .response { 
+      display: none; 
+      text-align: center; 
+      margin-top: 30px; 
+      font-size: 1.4rem; 
+      font-weight: 600; 
+      color: #d6336c; 
+      animation: fadeIn 1s ease; 
+    }
+
+    .heart { 
+      position: absolute; 
+      color: rgba(255, 77, 109, 0.5); 
+      font-size: 20px; 
+      animation: float 6s infinite ease-in; 
+    }
+
+    #buttonDiv, #pleaseSayYes {
+      opacity: 0;
+    }
+
+    @keyframes float { 
+      0% { transform: translateY(100vh) scale(0.5); opacity: 0; } 
+      10% { opacity: 1; } 
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; } 
+    }
+
+    @keyframes fadeIn { 
+      from { opacity: 0; transform: translateY(20px); } 
+      to { opacity: 1; transform: translateY(0); } 
+    }
+
+    @keyframes shake {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(-5px, 5px); }
+      50% { transform: translate(5px, -5px); }
+      75% { transform: translate(-5px, -5px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    .no.shake {
+      animation: shake 0.4s infinite;
+    }
+
+    @media (max-width: 600px) { 
+      h1 { font-size: 2.4rem; } 
+      .message { font-size: 0.9rem; } 
+      .couple-pic { width: 150px; height: 150px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Hi, Sweetheart ko!</h1>
+
+    <!-- COUPLE PHOTO -->
+    <img src="US.jpg" alt="Us ❤️" class="couple-pic" />
+
+    <!-- LOGIN SECTION -->
+    <div class="login" id="loginDiv">
+      <p>Please answer the question to open my love letter for you💗</p>
+      <p><strong>What is AKIN's favorite word?</strong></p>
+      <input type="text" id="secretInput" placeholder="Your answer here" />
+      <button style="opacity:1;" onclick="checkSecret()">Submit</button>
+    </div>
+
+    <!-- LOVE LETTER MESSAGE -->
+    <div class="message" id="messageDiv">
+      I want to express my love for you through coding, because words alone are not enough to show how special you are to me. Dili man siya perfect or nindot kaayo na pag buhat nako, but I put my heart, effort, and feelings into this little surprise just for you.
+
+      First of all, HAPPY VALENTINE'S DAY, BABY💕. I can’t stop thanking God for having you in my life and for staying with me, even when I’m hard to love. Please don’t stop loving me baby, especially when I make mistakes. I am truly sorry for the times I hurt you and for the things I did wrong. I may not be a perfect girlfriend, but I am genuinely trying my best. I give you everything that I can, all the love, care, effort, and sincerity I have.
+
+      I hope you know that your love is something I deeply value and never take for granted. Thank you for loving me, for understanding me, and for being my safe place. I hope you can continue to be patient with me as I become better, not just for myself, but for us.
+
+      I love you so much, babyy ko, always and forever💗. I also want to be honest about something that has been on my heart. We never really had a clear date or moment when I officially asked you to be mine, and that is my fault. I should have asked you properly and given you that special moment you deserve. I am sorry for that, baby.
+
+      So today, on Valentine’s Day, I want to do it right and make it official. Baby, with all my heart and <span style="color:#d6336c; cursor:pointer; font-weight:600;" onclick="revealGF()">sincerity</span><span id="gfReveal" style="display:inline; font-weight:bold; text-transform:uppercase;"></span>. I want to love you openly, choose you every day, and build something real and meaningful with you. I hope you will say yes and allow me to love you even more, today and always.
+    
+      And baby, this is not just words. I wanted this day na kanang something you can hold and remember. That’s why I got you a ring, and that ring symbolizes my promise to you. A promise that I will choose you every day, that I will stay, that I will grow with you hanggat sa aking makakaya, and that I will love you forever and ever💍💗.
+
+      I also got you this flower inside a glass. Since na-mention man nimo na you don’t like real flower bouquets, that’s why kani akong gi-buy — pero mag-buy gihapon ko nimog real flower bouquet, mwaa😚🌸. This one is special because, just like our love, it’s preserved—something you can always keep and look at, a little reminder of how much you mean to me and this special moment we share bisan ug LDR ta. Every time you see it, I hope it makes you smile and remember that there is someone who loves you endlessly, cherishes you, and is grateful to have you in her life💗.
+    </div>
+
+    <!-- QUESTION BUTTONS -->
+    <div class="question" id="questionDiv" style="display:none; flex-direction: column; align-items:center;">
+      <p id="pleaseSayYes" style="font-weight:bold; text-align:center;">BABYY, PLEASE SAY YES!🥰</p>
+      <div class="buttons" id="buttonDiv" style="display:flex; justify-content:center;">
+        <button class="yes" onclick="sayYes()">Yes💕</button>
+        <button class="no" onmouseover="runAway(this)">No🙈</button>
+      </div>
+    </div>
+
+    <!-- RESPONSE MESSAGE -->
+    <div class="response" id="response">
+      YEHEYYYY! I LOVE YOU SO MUCH, BABYY KO! I LOVE YOU ALWAYS AND FOREVER MAHAL KO💗
+    </div>
+
+    <!-- BACKGROUND MUSIC -->
+    <audio id="loveMusic" src="Balisong.mp3" preload="auto"></audio>
+  </div>
+
+  <script>
+    const secretWord = 'kiss';
+    const music = document.getElementById('loveMusic');
+
+    function checkSecret() {
+      const input = document.getElementById('secretInput').value.trim().toLowerCase();
+      if(input === secretWord) {
+        document.getElementById('loginDiv').style.display = 'none';
+        document.getElementById('messageDiv').style.display = 'block';
+        document.getElementById('questionDiv').style.display = 'flex';
+        createHearts();
+
+        const photo = document.querySelector(".couple-pic");
+        photo.style.display = "block";
+        setTimeout(() => { photo.style.opacity = 1; }, 100);
+
+        playMusicSmooth();
+      } else {
+        alert('Oops! Wrong answer😘. Try again, baby.');
+      }
+    }
+
+    // Smooth loop music
+    function playMusicSmooth() {
+      music.volume = 0;
+      music.play();
+
+      // Fade in
+      let fadeInInterval = setInterval(() => {
+        if (music.volume < 1) music.volume = Math.min(music.volume + 0.02, 1);
+        else clearInterval(fadeInInterval);
+      }, 100);
+
+      music.addEventListener('timeupdate', () => {
+        if (music.duration - music.currentTime <= 1) fadeOutAndRestart();
+      });
+    }
+
+    function fadeOutAndRestart() {
+      let fadeOutInterval = setInterval(() => {
+        if (music.volume > 0) music.volume = Math.max(music.volume - 0.02, 0);
+        else {
+          clearInterval(fadeOutInterval);
+          music.currentTime = 0;
+          music.play();
+          let fadeInInterval = setInterval(() => {
+            if (music.volume < 1) music.volume = Math.min(music.volume + 0.02, 1);
+            else clearInterval(fadeInInterval);
+          }, 100);
+        }
+      }, 100);
+    }
+
+    function revealGF() {
+      const text = " WILL YOU BE MY GIRLFRIEND?💗";
+      const container = document.getElementById('gfReveal');
+      const pleaseSayYes = document.getElementById('pleaseSayYes');
+      const buttonDiv = document.getElementById('buttonDiv');
+
+      container.innerHTML = ''; 
+      let i = 0;
+
+      function typeLetter() {
+        if(i < text.length) {
+          container.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(typeLetter, 120);
+        } else {
+          fadeIn(pleaseSayYes);
+          fadeIn(buttonDiv);
+        }
+      }
+      typeLetter();
+      createHearts();
+    }
+
+    function fadeIn(element) {
+      element.style.transition = 'opacity 2s';
+      element.style.opacity = 1;
+    }
+
+    function sayYes() {
+      document.getElementById('response').style.display = 'block';
+      createHearts();
+    }
+
+    function runAway(btn) {
+      const card = document.querySelector(".card");
+      const maxX = card.clientWidth - btn.clientWidth;
+      const maxY = card.clientHeight - btn.clientHeight;
+      const randomX = Math.random() * maxX;
+      const randomY = Math.random() * maxY;
+      btn.classList.add("shake");
+      btn.style.position = "absolute";
+      btn.style.left = randomX + "px";
+      btn.style.top = randomY + "px";
+    }
+
+    function createHearts() {
+      for (let i = 0; i < 20; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerHTML = '💖';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+      }
+    }
+  </script>
+</body>
+</html>
